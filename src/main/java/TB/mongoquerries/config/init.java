@@ -19,9 +19,12 @@ public class init {
         Employees mat = new Employees("mat", "Mateusz", "Kowal", 24, "HR");
         Employees rob = new Employees("rob", "Robert", "Mak", 22, "IT");
         Employees tom = new Employees("tom", "Tomasz", "Lok", 26, "IT");
+        Employees tom1 = new Employees("tom", "Tomasz", "Lok", 26, "IT");
+
         objects.add(mat);
         objects.add(rob);
         objects.add(tom);
+        objects.add(tom1);
         mongoTemplate.insertAll(objects);
     }
 }

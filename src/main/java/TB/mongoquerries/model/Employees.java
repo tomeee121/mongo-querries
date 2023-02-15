@@ -20,4 +20,28 @@ public class Employees {
         this.age = age;
         this.department = department;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
 }
