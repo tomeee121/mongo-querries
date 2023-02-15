@@ -31,9 +31,10 @@ public class EmployeeController {
 
     @GetMapping("/employees/{name}")
     List<Employee> findByName(@PathVariable(value = "name") String name) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("name").is(name));
-        return mongoTemplate.find(query, Employee.class);
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("name").is(name));
+//        return mongoTemplate.find(query, Employee.class);
+        return employeeRepository.findByName(name);
     }
 
 
