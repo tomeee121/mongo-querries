@@ -1,11 +1,13 @@
 package TB.mongoquerries.controller;
 
+import TB.mongoquerries.model.AvgCountDTO;
 import TB.mongoquerries.model.Employees;
 import TB.mongoquerries.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,17 @@ public class EmployeeController {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @GetMapping("/employees/age/{age}")
+    List<AvgCountDTO> findByAgeMatch(@PathVariable(value = "age") int age) {
+        MatchOperation matchOperation = Aggregation.match(new Criteria("age").is(age));
+        GroupOperation groupOperation = Aggregation.group("age").count().as("count");
+        SortOperation sortOperation = Aggregation.sort(Sort.by(Sort.Direction.DESC, "count"));
+        Aggregation aggregation = Aggregation.newAggregation(matchOperation, groupOperation, sortOperation);
+        AggregationResults<AvgCountDTO> aggregationResults = mongoTemplate.aggregate(aggregation, "employees", AvgCountDTO.class);
+        System.out.println(aggregationResults.getMappedResults());
+        return aggregationResults.getMappedResults();
+    }
 
     @GetMapping("/employees/{name}")
     List<Employees> findByName(@PathVariable(value = "name") String name) {
